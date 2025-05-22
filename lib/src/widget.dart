@@ -19,7 +19,7 @@ class Flasher extends StatefulWidget {
     this.duration = const Duration(milliseconds: 250),
     this.fadeOutDuration = const Duration(milliseconds: 350),
     this.fadeOutDelay = const Duration(milliseconds: 150,),
-    this.fadeOutOnComplete = true,
+    this.fadeOutOnComplete = false,
     this.repeat,
     this.active = true,
     required this.child,
