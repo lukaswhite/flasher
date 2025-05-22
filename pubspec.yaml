@@ -1,0 +1,10 @@
+name: flasher
+version: 1.0.0
+author: lukaswhite
+homepage: https://github.com/lukaswhite/flasher
+environment:
+  sdk: ">=3.7.2 <4.0.0"
+  flutter: ">=3.22.2"
+dependencies:
+  flutter:
+    sdk: flutter  
