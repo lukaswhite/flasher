@@ -59,5 +59,40 @@ Flasher.fadeOutAfter(
 )
 ```
 
+By default, the "flash" uses a simple easing curve (`Curves.ease`), but you can configue this as well:
+
+```dart
+Flasher.fadeOutAfter(
+    curve: Curves.bounceInOut,
+    child: Text('This is the child')
+)
+```
+
+Finally, if you want to defer the start you can set `active` to `false`:
+
+```dart
+Flasher.fadeOutAfter(
+    active: false,
+    child: Text('This is the child')
+)
+```
+
+Here's one with everything configured:
+
+```dart
+Flasher(
+    active: true,
+    flashDuration: const Duration(milliseconds: 150),
+    duration: const Duration(milliseconds: 250),
+    curve: Curves.bounceInOut,
+    fadeOutDuration: const Duration(milliseconds: 350),
+    fadeOutDelay: const Duration(milliseconds: 150,),
+    fadeOutOnComplete: true,
+    repeat: 10,
+    child: Text('This is the child'),
+)
+```
+
 Note that the child can be any Flutter widget; it's not limited to text.
 
+The package also contains a very simple example app.

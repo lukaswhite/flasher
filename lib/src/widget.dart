@@ -10,6 +10,7 @@ class Flasher extends StatefulWidget {
   final Duration fadeOutDelay;
   final bool fadeOutOnComplete;
   final int? repeat;
+  final bool active;
   
   Flasher({
     super.key,
@@ -20,6 +21,7 @@ class Flasher extends StatefulWidget {
     this.fadeOutDelay = const Duration(milliseconds: 150,),
     this.fadeOutOnComplete = true,
     this.repeat,
+    this.active = true,
     required this.child,
   });
 
@@ -30,6 +32,7 @@ class Flasher extends StatefulWidget {
     this.duration = const Duration(milliseconds: 250),
     this.fadeOutDuration = const Duration(milliseconds: 350),
     this.fadeOutDelay = const Duration(milliseconds: 150,),
+    this.active = true,
     required this.repeat,
     required this.child,
   }): fadeOutOnComplete = true;
@@ -51,9 +54,12 @@ class _FlasherState extends State<Flasher> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    totalDuration = (widget.flashDuration * 2) + widget.duration;
+    
+    totalDuration = widget.flashDuration + widget.duration;
+    
     double flashPc = widget.flashDuration.inMilliseconds / totalDuration.inMilliseconds * 100;    
     double visiblePc = 100.0 - flashPc;    
+    
     _controller = AnimationController(vsync: this, duration: totalDuration);
     _fadeOutController = AnimationController(vsync: this, duration: widget.fadeOutDuration,);
 
@@ -86,16 +92,14 @@ class _FlasherState extends State<Flasher> with TickerProviderStateMixin {
       if (status == AnimationStatus.completed) {
         _counter++;
         _controller.reverse();
-        if (_counter >= (widget.repeat ?? 1) && widget.repeat != null && widget.repeat! > 1) {
-          _endTween();
+        if (widget.repeat != null && _counter >= widget.repeat!) {
+          _stop();
         }
       } else if (status == AnimationStatus.dismissed) {
         _controller.forward();
       }
       setState(() {});
     });
-
-    _controller.forward();
 
     _fadeOutController.addListener(
       () {
@@ -104,9 +108,13 @@ class _FlasherState extends State<Flasher> with TickerProviderStateMixin {
         });        
       },
     );
+
+    if (widget.active) {
+      _controller.forward();
+    }
   }
 
-  _endTween() {
+  _stop() {
     Future.delayed(widget.duration, () {
       _controller.stop();
       if (widget.fadeOutOnComplete) {
