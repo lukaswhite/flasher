@@ -2,6 +2,8 @@
 
 A Flutter widget that makes its child "flash" on-and-off (blink).
 
+![Flasher in action](https://raw.githubusercontent.com/lukaswhite/flasher/refs/heads/main/docs/assets/flasher.gif)
+
 ## Usage
 
 First, import the package:
